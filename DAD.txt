@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Dad!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            transition: background-color 1s;
+        }
+        #dad {
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        #video {
+            display: none; /* Hide the video initially */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 560px;
+            height: 315px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="dad">DAD</div>
+    <div class="confetti"></div>
+    <div id="video">
+        <iframe width="560" height="315" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        const dadElement = document.getElementById('dad');
+        const confettiContainer = document.querySelector('.confetti');
+        const video = document.getElementById('video').querySelector('iframe');
+
+        dadElement.addEventListener('click', () => {
+            // Play the YouTube video
+            video.src = "https://www.youtube.com/watch?v=XNShkIh0vYI"; // Replace with your YouTube video URL
+            document.getElementById('video').style.display = 'block';
+
+            // Change background colors in a pattern
+            const colors = ['#FFB6C1', '#87CEEB', '#98FB98', '#FFD700', '#FF69B4'];
+            let colorIndex = 0;
+            setInterval(() => {
+                document.body.style.backgroundColor = colors[colorIndex];
+                colorIndex = (colorIndex + 1) % colors.length;
+            }, 1000);
+
+            // Create and animate confetti
+            for (let i = 0; i < 100; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.style.position = 'absolute';
+                confettiPiece.style.backgroundColor = getRandomColor();
+                confettiPiece.style.width = '10px';
+                confettiPiece.style.height = '10px';
+                confettiPiece.style.top = 0;
+                confettiPiece.style.left = Math.random() * window.innerWidth + 'px';
+                confettiPiece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confettiPiece.style.transition = `top ${Math.random() * 2 + 1}s ease-out`;
+
+                confettiContainer.appendChild(confettiPiece);
+
+                // Animate the confetti
+                setTimeout(() => {
+                    confettiPiece.style.top = window.innerHeight + 'px';
+                }, 0);
+            }
+        });
+
+        function getRandomColor() {
+            const colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#9400D3'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
